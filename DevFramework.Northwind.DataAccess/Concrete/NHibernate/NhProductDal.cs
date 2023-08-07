@@ -1,5 +1,6 @@
 ﻿using DevFramework.Core.DataAccess.NHibernate;
 using DevFramework.Northwind.DataAccess.Abstract;
+using DevFramework.Northwind.Entities.ComplexTypes;
 using DevFramework.Northwind.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,26 @@ namespace DevFramework.Northwind.DataAccess.Concrete.NHibernate
 {
     public class NhProductDal : NhEntityRepositoryBase<Product>, IProductDal
     {
+        NHibernateHelper _helper;
         public NhProductDal(NHibernateHelper nHibernateHelper) : base(nHibernateHelper)
         {
+            _helper = nHibernateHelper;
         }
-    }
 
-    public class NhCategoryDal : NhEntityRepositoryBase<Category>, ICategoryDal
-    {
-        public NhCategoryDal(NHibernateHelper nHibernateHelper) : base(nHibernateHelper)
+        public List<ProductDetail> GetProductDetails()
         {
+            using (var session = _helper.OpenSession())
+            {
+                var result = from p in session.Query<Product>()
+                             join c in session.Query<Category>() on p.CategoryId equals c.CategoryId
+                             select new ProductDetail
+                             {
+                                 ProductId = p.ProductId,
+                                 ProductName = p.ProductName,
+                                 CategoryName = c.CategoryName
+                             };
+                return result.ToList();
+            }
         }
     }
 }
