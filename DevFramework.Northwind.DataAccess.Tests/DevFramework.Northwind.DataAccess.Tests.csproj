@@ -56,7 +56,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityFrameworkUnitTests\EfCategoryDalUnitTest.cs" />
     <Compile Include="EntityFrameworkUnitTests\EfProductDalUnitTest.cs" />
+    <Compile Include="NHibernateUnitTests\NhCategoryDalUnitTest.cs" />
     <Compile Include="NHibernateUnitTests\NhProductDalUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
