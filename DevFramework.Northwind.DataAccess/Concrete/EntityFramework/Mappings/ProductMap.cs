@@ -22,5 +22,7 @@ namespace DevFramework.Northwind.DataAccess.Concrete.EntityFramework.Mappings
             Property(e => e.UnitPrice).HasColumnName("UnitPrice");
             Property(e => e.ProductName).HasColumnName("ProductName");
         }
+
+        
     }
 }
