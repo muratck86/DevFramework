@@ -1,3 +1,5 @@
+using DevFramework.Core.Utilities.Mvc.Infrastructure;
+using DevFramework.Northwind.Business.DependencyResolvers.Ninject;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace DevFramework.Northwind.MvcWebUI
 {
@@ -15,7 +18,9 @@ namespace DevFramework.Northwind.MvcWebUI
     {
         public Startup(IConfiguration configuration)
         {
+            ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory(new BusinessModule()));
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -52,6 +57,7 @@ namespace DevFramework.Northwind.MvcWebUI
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }
